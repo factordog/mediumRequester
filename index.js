@@ -1,12 +1,12 @@
 const axios = require('axios');
 
 const MediumRequester = {
-    baseUrl: 'https://medium.com/';
-    getUserPosts: function (username) {
+    baseUrl: 'https://medium.com/',
+    getUser: function (username) {
         return axios.get(`${this.baseUrl}@${username}?format=json`)
             .then((res) => {
                 const responseObject = this._removePrependedString(res.data);
-                console.log(responseObject.payload.references.Post);
+                return responseObject.payload;
             })
             .catch((err) => {
                 console.log(err);
@@ -16,7 +16,7 @@ const MediumRequester = {
         return axios.get(`${this.baseUrl}@${username}/${id}?format=json`)
             .then((res) => {
                 const responseObject = this._removePrependedString(res.data);
-                console.log(responseObject.payload.references.Post);
+                return responseObject.payload;
             })
             .catch((err) => {
                 console.log(err);
@@ -28,6 +28,8 @@ const MediumRequester = {
     }
 }
 
-module.exports = {
-    getUserPosts
-}
+
+MediumRequester.getUser('lukethedev');
+MediumRequester.getUserPost('lukethedev', '934a7a8778f9');
+
+module.exports = Object.create(MediumRequester);
